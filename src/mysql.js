@@ -1,4 +1,6 @@
 const mysql = require('mysql');
+const session = require('koa-session-minimal');
+const MySQLStore = require('koa-mysql-session');
 const config = require('./config');
 
 const connection = mysql.createConnection(config.mysql);
@@ -27,27 +29,27 @@ module.exports = {
       }
 
       console.log('connected as id ' + connection.threadId);
-
-      // connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
-      //   if (error) throw error;
-      //   console.log('The solution is: ', results[0].solution);
-      // });
     });
+  },
+  initSession(app) {
+    app.use(session({
+      key: 'SESSION_KEY',
+      store: new MySQLStore(config.mysql)
+    }));
   },
   initTable() {
     query(`create table if not exists user(
       id INT NOT NULL AUTO_INCREMENT,
       username VARCHAR(100) NOT NULL COMMENT '用户名',
       password VARCHAR(100) NOT NULL COMMENT '用户密码',
-      create_time VARCHAR(100) NOT NULL COMMENT '注册时间',
+      create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
       PRIMARY KEY ( id )
      );`);
   },
   createUser(values) {
     return query(`insert user set username=?,password=?`, values);
+  },
+  userLogin(values) {
+    return query(`select * from user where username=? && password=?`, values);
   }
 }
-
-// alter table user change column create_time create_time TIMESTAMP NOT NULL DEFAULT REPLACE(unix_timestamp(current_timestamp(3)),'.','');
-
-// alter table user change column create_time create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP();

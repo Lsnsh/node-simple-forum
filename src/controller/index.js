@@ -1,8 +1,8 @@
 
-const mysql = require('./mysql');
-
+const apiController = require('./api');
 
 module.exports = {
+  ...apiController,
   home: {
     async index(ctx) {
       await ctx.render('home', {
@@ -29,10 +29,10 @@ module.exports = {
       });
     }
   },
-  login: {
+  signin: {
     async index(ctx) {
-      await ctx.render('login', {
-        title: 'login'
+      await ctx.render('signin', {
+        title: 'signin'
       });
     }
   },
@@ -41,16 +41,6 @@ module.exports = {
       await ctx.render('signup', {
         title: 'signup'
       });
-    }
-  },
-  api: {
-    async signup(ctx) {
-      const body = ctx.request.body;
-      await mysql.createUser([body.username, body.password]);
-      ctx.body = {
-        code: 200,
-        message: '注册成功'
-      };
     }
   }
 }

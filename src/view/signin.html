@@ -1,19 +1,18 @@
-<div id="signup-page">
-  <h1>注册</h1>
+<div id="signin-page">
+  <h1>登陆</h1>
   <div>
     <form>
       <label for="username">用户名</label>
       <input type="text" name="username" id="username">
       <label for="password">密码</label>
       <input type="password" name="password" id="password">
-      <button type="button" onclick="createUser()">注册</button>
-      <button type="reset">清空</button>
+      <button type="button" onclick="userLogin()">登陆</button>
     </form>
   </div>
 </div>
 <script>
-  const createUser = () => {
-    var url = '/api/signup';
+  const userLogin = () => {
+    var url = '/api/signin';
     var data = { username: document.querySelector('#username').value, password: document.querySelector('#password').value, };
 
     fetch(url, {
@@ -22,10 +21,14 @@
       headers: new Headers({
         'Content-Type': 'application/json'
       })
-    }).then(res => {
+    }).then(async res => {
+      const r = await res.json();
+      console.log(r);
       console.log(res);
+      if (r.result) {
+        location.replace('/');
+      }
     })
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', response));
+      .catch(error => console.error('Error:', error));
   }
 </script>

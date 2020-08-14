@@ -11,7 +11,6 @@ const mysql = require('./mysql');
 const app = new Koa();
 const router = new Router();
 
-// https://github.com/koajs/ejs
 render(app, {
   root: path.join(__dirname, 'view'),
 });
@@ -22,6 +21,7 @@ initRoute({
 });
 
 mysql.connect();
+mysql.initSession(app);
 mysql.initTable();
 
 app.use(bodyParser());
@@ -32,8 +32,5 @@ app.listen(3000);
 console.log('listening http://localhost:3000');
 
 app.on('error', function (err, ctx) {
-  // ctx.status = err.statusCode || err.status || 500;
-  // ctx.body = err.message;
-  // console.log(ctx.status, ctx.body);
   console.log(err.stack);
 });
