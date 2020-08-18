@@ -8,4 +8,5 @@ module.exports = (option) => {
   router.get('/signup', controller.signup.index);
   router.post('/api/signup', controller.api.signup);
   router.post('/api/signin', controller.api.signin);
+  router.post('/api/post/create', controller.api.createPost);
 }

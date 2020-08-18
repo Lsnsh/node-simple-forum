@@ -1,19 +1,25 @@
 
 const apiController = require('./api');
+const mysql = require('../mysql');
 
 module.exports = {
   ...apiController,
   home: {
     async index(ctx) {
+      const postList = await mysql.postList();
       await ctx.render('home', {
-        title: 'home'
+        title: 'home',
+        postList: postList || [],
+        session: ctx.session
       });
     }
   },
   post: {
     async index(ctx) {
+      const postList = await mysql.postList();
       await ctx.render('post/list', {
-        title: 'post'
+        title: 'post',
+        postList: postList || []
       });
     },
     async new(ctx) {

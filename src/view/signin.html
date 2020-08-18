@@ -23,8 +23,6 @@
       })
     }).then(async res => {
       const r = await res.json();
-      console.log(r);
-      console.log(res);
       if (r.result) {
         location.replace('/');
       }

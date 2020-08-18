@@ -1,6 +1,25 @@
-<div style="text-align: center;">
-  <a href="/post/new">
-    <button>发帖</button>
-  </a>
-</div>
-<h1>post list</h1>
+<section class="post-list-wrapper">
+  <div style="text-align: center;">
+    <h1>post list</h1>
+    <div>
+      <a href="/post/new">
+        <button>发帖</button>
+      </a>
+    </div>
+  </div>
+  <ul class="post-list">
+    <% if (postList && postList.length) { %>
+      <% postList.forEach(function(post) { %>
+        <li>
+          <p><%= post.title %></p>
+          <p>
+            <span><%= post.author %></span>
+            <span><%= post.create_time %></span>
+          </p>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <p>还没有帖子，快去发一贴吧</p>
+    <% } %>
+  </ul>
+</section>

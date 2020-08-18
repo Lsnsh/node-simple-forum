@@ -12,12 +12,12 @@ module.exports = {
     },
     async signin(ctx) {
       const body = ctx.request.body;
-      const userInfo = await mysql.userLogin([body.username, body.password]);
-      const isLogined = userInfo && userInfo.length > 0;
+      const userInfoList = await mysql.userLogin([body.username, body.password]);
+      const isLogined = userInfoList && userInfoList.length > 0;
       if (isLogined) {
         ctx.session = {
-          user: userInfo[0].name,
-          id: userInfo[0].id
+          username: userInfoList[0].username,
+          id: userInfoList[0].id
         }
       }
       ctx.body = {
@@ -27,6 +27,18 @@ module.exports = {
           message: isLogined ? '登陆成功' : '登陆失败'
         }
       }
-    }
+    },
+    async createPost(ctx) {
+      const body = ctx.request.body;
+      const res = await mysql.createPost([body.title, ctx.session.username, ctx.session.id, body.content]);
+      ctx.body = {
+        res: res,
+        result: true,
+        status: {
+          code: 200,
+          message: '创建成功'
+        }
+      }
+    },
   }
 }

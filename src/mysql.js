@@ -3,7 +3,8 @@ const session = require('koa-session-minimal');
 const MySQLStore = require('koa-mysql-session');
 const config = require('./config');
 
-const connection = mysql.createConnection(config.mysql);
+// 因为需要保存 emoji 表情，指定 connection 的 charset 为 utf8mb4
+const connection = mysql.createConnection({...config.mysql, charset: 'utf8mb4'});
 
 const query = (sql, values) => {
   console.log('values: ', values);
@@ -21,6 +22,20 @@ const query = (sql, values) => {
 }
 
 module.exports = {
+  // 用户
+  createUser(values) {
+    return query(`insert user set username=?,password=?`, values);
+  },
+  userLogin(values) {
+    return query(`select * from user where username=? && password=?`, values);
+  },
+  // 帖子
+  postList(values) {
+    return query(`select * from post`, values);
+  },
+  createPost(values) {
+    return query(`insert post set title=?,author=?,user_id=?,content=?`, values);
+  },
   connect() {
     connection.connect(function (err) {
       if (err) {
@@ -46,10 +61,15 @@ module.exports = {
       PRIMARY KEY ( id )
      );`);
   },
-  createUser(values) {
-    return query(`insert user set username=?,password=?`, values);
+  initPost() {
+    query(`create table if not exists post(
+      id INT NOT NULL AUTO_INCREMENT,
+      title VARCHAR(100) NOT NULL COMMENT '标题',
+      author VARCHAR(100) NOT NULL COMMENT '楼主',
+      user_id int NOT NULL COMMENT '楼主ID',
+      create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发帖时间',
+      content VARCHAR(100) NOT NULL COMMENT '内容',
+      PRIMARY KEY(id)
+     );`);
   },
-  userLogin(values) {
-    return query(`select * from user where username=? && password=?`, values);
-  }
 }
