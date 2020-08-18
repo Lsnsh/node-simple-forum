@@ -34,7 +34,10 @@ module.exports = {
     return query(`select * from post`, values);
   },
   createPost(values) {
-    return query(`insert post set title=?,author=?,user_id=?,content=?`, values);
+    return query(`insert post set title=?,author=?,author_id=?,content=?`, values);
+  },
+  postDetail(values) {
+    return query(`select * from post where id=?`, values);
   },
   connect() {
     connection.connect(function (err) {
@@ -66,7 +69,7 @@ module.exports = {
       id INT NOT NULL AUTO_INCREMENT,
       title VARCHAR(100) NOT NULL COMMENT '标题',
       author VARCHAR(100) NOT NULL COMMENT '楼主',
-      user_id int NOT NULL COMMENT '楼主ID',
+      author_id int NOT NULL COMMENT '楼主ID',
       create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发帖时间',
       content VARCHAR(100) NOT NULL COMMENT '内容',
       PRIMARY KEY(id)

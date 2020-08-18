@@ -1,3 +1,25 @@
+html {
+  /* font: 137.5%/1.5 'ff-meta-serif-web-pro','system-ui',serif; */
+  font: 110%/1.5 'ff-meta-serif-web-pro','system-ui',serif;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
+body {
+  max-width: 832px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  color: #1a1a1a;
+}
 a {
-  text-decoration: none;
+  /* text-decoration: none; */
+}
+.section-wrapper {
+  max-width: 832px;
+  padding: 32px 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+::selection {
+  background: #ffea00;
+  color: black;
 }

@@ -1,4 +1,4 @@
-<section class="post-list-wrapper">
+<section class="section-wrapper post-list-wrapper">
   <div style="text-align: center;">
     <h1>post list</h1>
     <div>
@@ -11,10 +11,11 @@
     <% if (postList && postList.length) { %>
       <% postList.forEach(function(post) { %>
         <li>
-          <p><%= post.title %></p>
+          <!-- <p><%= JSON.stringify(post, null, 2) %></p> -->
+          <a href="/post/<%= post.id %>" target="_blank"><%= post.title %></a>
           <p>
             <span><%= post.author %></span>
-            <span><%= post.create_time %></span>
+            <span><%= post.create_time.toLocaleDateString() %></span>
           </p>
         </li>
       <% }) %>

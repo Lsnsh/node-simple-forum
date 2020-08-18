@@ -18,7 +18,7 @@ module.exports = {
     async index(ctx) {
       const postList = await mysql.postList();
       await ctx.render('post/list', {
-        title: 'post',
+        title: 'post list',
         postList: postList || []
       });
     },
@@ -26,7 +26,14 @@ module.exports = {
       await ctx.render('post/new', {
         title: 'new post'
       });
-    }
+    },
+    async detail(ctx) {
+      const postDetail = await mysql.postDetail([+ctx.params.id]);
+      await ctx.render('post/detail', {
+        title: 'post detail',
+        post: postDetail[0]
+      });
+    },
   },
   user: {
     async index(ctx) {
