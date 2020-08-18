@@ -6,12 +6,12 @@
       <input type="text" name="username" id="username">
       <label for="password">密码</label>
       <input type="password" name="password" id="password">
-      <button type="button" onclick="userLogin()">登陆</button>
+      <button type="button" onclick="_userLogin()">登陆</button>
     </form>
   </div>
 </div>
 <script>
-  const userLogin = () => {
+  const _userLogin = () => {
     var url = '/api/signin';
     var data = { username: document.querySelector('#username').value, password: document.querySelector('#password').value, };
 

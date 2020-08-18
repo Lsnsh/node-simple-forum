@@ -42,6 +42,13 @@ module.exports = {
   postDetail(values) {
     return query(`select * from post where id=?`, values);
   },
+  // 评论
+  commentList(values) {
+    return query(`select * from comment where post_id=?`, values);
+  },
+  createComment(values) {
+    return query(`insert comment set post_id=?,user_id=?,user_nick=?,text=?`, values);
+  },
   connect() {
     connection.connect(function (err) {
       if (err) {
@@ -66,16 +73,25 @@ module.exports = {
       create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
       PRIMARY KEY ( id )
      );`);
-  },
-  initPost() {
-    query(`create table if not exists post(
-      id INT NOT NULL AUTO_INCREMENT,
-      title VARCHAR(100) NOT NULL COMMENT '标题',
-      author VARCHAR(100) NOT NULL COMMENT '楼主',
-      author_id int NOT NULL COMMENT '楼主ID',
-      create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发帖时间',
-      content VARCHAR(100) NOT NULL COMMENT '内容',
-      PRIMARY KEY(id)
-     );`);
+
+     query(`create table if not exists post(
+       id INT NOT NULL AUTO_INCREMENT,
+       author_id int NOT NULL COMMENT '楼主ID',
+       author VARCHAR(100) NOT NULL COMMENT '楼主',
+       title VARCHAR(100) NOT NULL COMMENT '标题',
+       content VARCHAR(100) NOT NULL COMMENT '内容',
+       create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发帖时间',
+       PRIMARY KEY(id)
+      );`);
+
+      query(`create table if not exists comment(
+        id INT NOT NULL AUTO_INCREMENT,
+        post_id int NOT NULL COMMENT '被评论的帖子ID',
+        user_id int NOT NULL COMMENT '评论者的用户ID',
+        user_nick VARCHAR(100) NOT NULL COMMENT '评论者的用户昵称',
+        text VARCHAR(100) NOT NULL COMMENT '评论内容',
+        create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
+        PRIMARY KEY(id)
+       );`);
   },
 }

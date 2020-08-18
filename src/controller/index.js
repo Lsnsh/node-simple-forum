@@ -29,9 +29,11 @@ module.exports = {
     },
     async _id(ctx) {
       const postDetail = await mysql.postDetail([+ctx.params.id]);
+      const commentList = await mysql.commentList([+ctx.params.id]);
       await ctx.render('post/_id', {
         title: 'post detail',
-        post: postDetail[0]
+        post: postDetail[0],
+        commentList: commentList
       });
     },
   },

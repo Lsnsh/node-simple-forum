@@ -10,4 +10,5 @@ module.exports = (option) => {
   router.post('/api/signup', controller.api.signup);
   router.post('/api/signin', controller.api.signin);
   router.post('/api/post/create', controller.api.createPost);
+  router.post('/api/comment/create', controller.api.createComment);
 }

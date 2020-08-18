@@ -19,7 +19,7 @@ module.exports = {
       const isLogined = userInfoList && userInfoList.length > 0;
       if (isLogined) {
         ctx.session = {
-          username: userInfoList[0].username,
+          name: userInfoList[0].username,
           id: userInfoList[0].id
         }
       }
@@ -33,13 +33,25 @@ module.exports = {
     },
     async createPost(ctx) {
       const body = ctx.request.body;
-      const res = await mysql.createPost([body.title, ctx.session.username, ctx.session.id, body.content]);
+      const res = await mysql.createPost([body.title, ctx.session.name, ctx.session.id, body.content]);
       ctx.body = {
         res: res,
         result: true,
         status: {
           code: 200,
           message: '创建成功'
+        }
+      }
+    },
+    async createComment(ctx) {
+      const body = ctx.request.body;
+      const res = await mysql.createComment([body.post_id, ctx.session.id, ctx.session.name, body.text]);
+      ctx.body = {
+        res: res,
+        result: true,
+        status: {
+          code: 200,
+          message: '发表成功'
         }
       }
     },

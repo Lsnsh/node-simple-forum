@@ -23,7 +23,6 @@ initRoute({
 mysql.connect();
 mysql.initSession(app);
 mysql.initTable();
-mysql.initPost();
 
 app.use(bodyParser());
 app.use(router.routes());

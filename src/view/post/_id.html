@@ -10,17 +10,55 @@
       </p>
       <pre><%= post.content %></pre>
     </div>
-    <!-- TODO: 评论列表 -->
-    <div style="padding-top: 20px;"></div>
-    <!-- TODO: 发表评论 -->
+    <!-- 评论列表 -->
+    <div class="comment-list" style="padding-top: 20px;">
+      <% if (commentList && commentList.length) { %>
+        <% commentList.forEach(function(comment, index) { %>
+          <div style="<%= index === 0 ? 'border-top: 1px solid #e1e4e6;' : '' %>border-bottom: 1px solid #e1e4e6;">
+            <p><%= comment.text %></p>
+            <p style="display: flex;justify-content: space-between;">
+              <a href="/user<%= comment.user_id %>"><%= comment.user_nick %></a>
+              <span>
+                <span style="margin-right: 5px;vertical-align: top;"><%= index + 1 %>楼</span>
+                <span style="vertical-align: top;"><%= comment.create_time.toLocaleDateString() %></span>
+              </span>
+            </p>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+    <!-- 发表评论 -->
     <div style="padding-top: 20px;">
       <div>您需要登录后才可以回复，请<a href="/signin">登录</a>或者<a href="/signup">立即注册</a></div>
       <textarea name="comment" id="comment" cols="50" rows="6"></textarea>
       <div>
-        <button type="button">回复</button>
+        <button type="button" onclick="_createComment()">回复</button>
       </div>
     </div>
   <% } else { %>
     <p>帖子找不到了 ：）</p>
   <% } %>
 </section>
+<script>
+  const _createComment = () => {
+    var url = '/api/comment/create';
+    var data = {
+      post_id: 1,
+      text: document.querySelector('#comment').value,
+    };
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(async res => {
+      const r = await res.json();
+      if (r.result) {
+        location.reload();
+      }
+    })
+      .catch(error => console.error('Error:', error));
+  }
+</script>
