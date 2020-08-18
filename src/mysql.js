@@ -29,6 +29,9 @@ module.exports = {
   userLogin(values) {
     return query(`select * from user where username=? && password=?`, values);
   },
+  userDetail(values) {
+    return query(`select username,create_time from user where id=?`, values);
+  },
   // 帖子
   postList(values) {
     return query(`select * from post`, values);

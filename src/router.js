@@ -3,8 +3,8 @@ module.exports = (option) => {
   router.get('/', controller.home.index);
   router.get('/post', controller.post.index);
   router.get('/post/new', controller.post.new);
-  router.get('/post/:id', controller.post.detail);
-  router.get('/user', controller.user.index);
+  router.get('/post/:id', controller.post._id);
+  router.get('/user/:id', controller.user._id);
   router.get('/signin', controller.signin.index);
   router.get('/signup', controller.signup.index);
   router.post('/api/signup', controller.api.signup);

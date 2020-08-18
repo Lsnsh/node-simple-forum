@@ -6,8 +6,11 @@ module.exports = {
       const body = ctx.request.body;
       await mysql.createUser([body.username, body.password]);
       ctx.body = {
-        code: 200,
-        message: '注册成功'
+        result: true,
+        status: {
+          code: 200,
+          message: '注册成功'
+        }
       };
     },
     async signin(ctx) {

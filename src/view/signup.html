@@ -1,12 +1,13 @@
 <div id="signup-page">
   <h1>注册</h1>
   <div>
+    <!-- TODO: 表单校验 -->
     <form>
       <label for="username">用户名</label>
-      <input type="text" name="username" id="username">
+      <input type="text" name="username" id="username" required>
       <label for="password">密码</label>
-      <input type="password" name="password" id="password">
-      <button type="button" onclick="createUser()">注册</button>
+      <input type="password" name="password" id="password" required>
+      <button type="button" onclick="createUser">注册</button>
       <button type="reset">清空</button>
     </form>
   </div>
@@ -22,8 +23,11 @@
       headers: new Headers({
         'Content-Type': 'application/json'
       })
-    }).then(res => {
-      console.log(res);
+    }).then(async res => {
+      const r = await res.json();
+      if (r.result) {
+        location.replace('/');
+      }
     })
       .catch(error => console.error('Error:', error))
       .then(response => console.log('Success:', response));
