@@ -7,6 +7,7 @@ const config = require('./config');
 const connection = mysql.createConnection({...config.mysql, charset: 'utf8mb4'});
 
 const query = (sql, values) => {
+  console.log('sql: ', sql);
   console.log('values: ', values);
   return new Promise((resolve, reject) => {
     connection.query({
@@ -47,7 +48,13 @@ module.exports = {
     return query(`select * from comment where post_id=?`, values);
   },
   createComment(values) {
-    return query(`insert comment set post_id=?,user_id=?,user_nick=?,text=?`, values);
+    return query(`insert comment set post_id=?,post_author_id=?,user_id=?,user_nick=?,text=?`, values);
+  },
+  deleteComment(values) {
+    return query(`delete from comment where id=? && post_id=?`, values);
+  },
+  findUserIdByPostIdAndCommentIdFromComment(values) {
+    return query(`select * from comment where id=? && post_id=?`, values);
   },
   connect() {
     connection.connect(function (err) {
@@ -87,6 +94,7 @@ module.exports = {
       query(`create table if not exists comment(
         id INT NOT NULL AUTO_INCREMENT,
         post_id int NOT NULL COMMENT '被评论的帖子ID',
+        post_author_id int NOT NULL COMMENT '被评论的帖子的作者ID',
         user_id int NOT NULL COMMENT '评论者的用户ID',
         user_nick VARCHAR(100) NOT NULL COMMENT '评论者的用户昵称',
         text VARCHAR(100) NOT NULL COMMENT '评论内容',

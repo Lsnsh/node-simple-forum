@@ -45,13 +45,46 @@ module.exports = {
     },
     async createComment(ctx) {
       const body = ctx.request.body;
-      const res = await mysql.createComment([body.post_id, ctx.session.id, ctx.session.name, body.text]);
+      const res = await mysql.createComment([body.post_id, body.post_author_id, ctx.session.id, ctx.session.name, body.text]);
       ctx.body = {
         res: res,
         result: true,
         status: {
           code: 200,
           message: '发表成功'
+        }
+      }
+    },
+    async deleteComment(ctx) {
+      const body = ctx.request.body;
+      // 删除前先确保有权限删除
+      const comment = await mysql.findUserIdByPostIdAndCommentIdFromComment([body.comment_id, body.post_id]);
+      const hasResult = comment.length > 0;
+      if (!hasResult) {
+        return ctx.body = {
+          result: false,
+          status: {
+            code: 200,
+            message: '删除失败'
+          }
+        }
+      }
+      if (ctx.session.id !== comment[0].post_author_id && ctx.session.id !== comment[0].user_id) {
+        return ctx.body = {
+          result: false,
+          status: {
+            code: 200,
+            message: '权限不足'
+          }
+        }
+      }
+      const res = await mysql.deleteComment([body.comment_id, body.post_id]);
+      ctx.body = {
+        res: res,
+        result: true,
+        status: {
+          code: 200,
+          message: '删除成功'
         }
       }
     },

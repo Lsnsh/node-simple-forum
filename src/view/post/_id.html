@@ -1,50 +1,97 @@
 <section class="section-wrapper post-detail-wrapper">
   <% if (post) { %>
-    <!-- 帖子详情 -->
-    <div>
-      <!-- <p><%= JSON.stringify(post, null, 2) %></p> -->
-      <h1><%= post.title %></h1>
-      <p>
-        <a href="/user/<%= post.author_id %>" target="_blank"><%= post.author %></a>
-        <span><%= post.create_time.toLocaleDateString() %></span>
+  <!-- 帖子详情 -->
+  <div>
+    <h1><%= post.title %></h1>
+    <p>
+      <a href="/user/<%= post.author_id %>" target="_blank"><%= post.author %></a>
+      <span><%= post.create_time.toLocaleDateString() %></span>
+    </p>
+    <pre><%= post.content %></pre>
+  </div>
+  <!-- 评论列表 -->
+  <div class="comment-list" style="padding-top: 20px;">
+    <% if (commentList && commentList.length) { %>
+    <% commentList.forEach(function(comment, index) { %>
+    <div <%- `style="${index === 0 ? 'border-top: 1px solid #e1e4e6;' : ''}border-bottom: 1px solid #e1e4e6;"` %>>
+      <p><%= comment.text %></p>
+      <p style="display: flex;justify-content: space-between;">
+        <a href="/user/<%= comment.user_id %>"><%= comment.user_nick %></a>
+        <span>
+          <%# 楼主可以删除所有回复、层主可以删除自己的回复 %>
+          <% if (session.id === post.author_id || session.id === comment.user_id) { %>
+          <span
+            <%- `style="color: ${session.id === post.author_id && post.author_id !== comment.user_id ? '#999' : 'blue'};"` %>
+            class="cs-pt" data-post-id="<%= post.id %>" data-comment-id="<%= comment.id %>"
+            onclick="_deleteComment(event)">删除</span>
+          <% } %>
+          <span style="margin-right: 5px;vertical-align: top;"><%= index + 1 %>楼</span>
+          <span style="vertical-align: top;"><%= comment.create_time.toLocaleDateString() %></span>
+        </span>
       </p>
-      <pre><%= post.content %></pre>
     </div>
-    <!-- 评论列表 -->
-    <div class="comment-list" style="padding-top: 20px;">
-      <% if (commentList && commentList.length) { %>
-        <% commentList.forEach(function(comment, index) { %>
-          <div style="<%= index === 0 ? 'border-top: 1px solid #e1e4e6;' : '' %>border-bottom: 1px solid #e1e4e6;">
-            <p><%= comment.text %></p>
-            <p style="display: flex;justify-content: space-between;">
-              <a href="/user<%= comment.user_id %>"><%= comment.user_nick %></a>
-              <span>
-                <span style="margin-right: 5px;vertical-align: top;"><%= index + 1 %>楼</span>
-                <span style="vertical-align: top;"><%= comment.create_time.toLocaleDateString() %></span>
-              </span>
-            </p>
-          </div>
-        <% }) %>
-      <% } %>
+    <% }) %>
+    <% } %>
+  </div>
+  <!-- 发表评论 -->
+  <div style="padding-top: 20px;">
+    <% if (!session || !session.id) { %>
+    <div>您需要登录后才可以回复，请<a href="/signin">登录</a>或者<a href="/signup">立即注册</a></div>
+    <% } else {%>
+    <div>发表回复</div>
+    <% } %>
+    <textarea name="comment" id="comment" cols="50" rows="6"></textarea>
+    <div>
+      <button type="button" data-post-id="<%= post.id %>" data-post-author-id="<%= post.author_id %>" onclick="_createComment(event)">回复</button>
     </div>
-    <!-- 发表评论 -->
-    <div style="padding-top: 20px;">
-      <div>您需要登录后才可以回复，请<a href="/signin">登录</a>或者<a href="/signup">立即注册</a></div>
-      <textarea name="comment" id="comment" cols="50" rows="6"></textarea>
-      <div>
-        <button type="button" onclick="_createComment()">回复</button>
-      </div>
-    </div>
+  </div>
   <% } else { %>
-    <p>帖子找不到了 ：）</p>
+  <p>帖子找不到了 ：）</p>
   <% } %>
 </section>
+
 <script>
-  const _createComment = () => {
-    var url = '/api/comment/create';
-    var data = {
-      post_id: 1,
-      text: document.querySelector('#comment').value,
+  const _createComment = (e) => {
+    const text = document.querySelector('#comment').value;
+    if (!text) {
+      return;
+    }
+    if (!text.trim()) {
+      return alert('您输入的内容不合法，请修改后重新提交。');
+    }
+    const dataset = e.target.dataset;
+    const url = '/api/comment/create';
+    const data = {
+      post_id: +dataset.postId,
+      post_author_id: +dataset.postAuthorId,
+      text: text,
+    };
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(async res => {
+      const r = await res.json();
+      if (r.result) {
+        location.reload();
+      }
+    })
+      .catch(error => console.error('Error:', error));
+  }
+
+  const _deleteComment = (e) => {
+    const ifConfirm = confirm("确认删除这条回复？");
+    if (!ifConfirm) {
+      return;
+    }
+    const dataset = e.target.dataset;
+    const url = '/api/comment/delete';
+    const data = {
+      post_id: +dataset.postId,
+      comment_id: +dataset.commentId,
     };
 
     fetch(url, {

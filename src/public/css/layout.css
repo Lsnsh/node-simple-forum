@@ -1,5 +1,4 @@
 html {
-  /* font: 137.5%/1.5 'ff-meta-serif-web-pro','system-ui',serif; */
   font: 110%/1.5 'ff-meta-serif-web-pro','system-ui',serif;
   box-sizing: border-box;
   overflow-y: scroll;
@@ -10,8 +9,9 @@ body {
   padding: 32px 16px;
   color: #1a1a1a;
 }
-a {
-  /* text-decoration: none; */
+::selection {
+  background: #ffea00;
+  color: black;
 }
 .section-wrapper {
   max-width: 832px;
@@ -19,7 +19,6 @@ a {
   margin-left: auto;
   margin-right: auto;
 }
-::selection {
-  background: #ffea00;
-  color: black;
+.cs-pt {
+  cursor: pointer;
 }

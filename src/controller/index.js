@@ -33,7 +33,8 @@ module.exports = {
       await ctx.render('post/_id', {
         title: 'post detail',
         post: postDetail[0],
-        commentList: commentList
+        commentList: commentList,
+        session: ctx.session
       });
     },
   },

@@ -11,7 +11,6 @@
     <% if (postList && postList.length) { %>
       <% postList.forEach(function(post) { %>
         <li>
-          <!-- <p><%= JSON.stringify(post, null, 2) %></p> -->
           <a href="/post/<%= post.id %>" target="_blank"><%= post.title %></a>
           <p>
             <span><%= post.author %></span>
