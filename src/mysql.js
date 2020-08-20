@@ -75,7 +75,7 @@ module.exports = {
   initTable() {
     query(`create table if not exists user(
       id INT NOT NULL AUTO_INCREMENT,
-      username VARCHAR(100) NOT NULL COMMENT '用户名',
+      username VARCHAR(14) NOT NULL COMMENT '用户名',
       password VARCHAR(100) NOT NULL COMMENT '用户密码',
       create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
       PRIMARY KEY ( id )
@@ -84,9 +84,9 @@ module.exports = {
      query(`create table if not exists post(
        id INT NOT NULL AUTO_INCREMENT,
        author_id int NOT NULL COMMENT '楼主ID',
-       author VARCHAR(100) NOT NULL COMMENT '楼主',
-       title VARCHAR(100) NOT NULL COMMENT '标题',
-       content VARCHAR(100) NOT NULL COMMENT '内容',
+       author VARCHAR(14) NOT NULL COMMENT '楼主',
+       title VARCHAR(30) NOT NULL COMMENT '标题',
+       content VARCHAR(500) NOT NULL COMMENT '内容',
        create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发帖时间',
        PRIMARY KEY(id)
       );`);
@@ -96,8 +96,8 @@ module.exports = {
         post_id int NOT NULL COMMENT '被评论的帖子ID',
         post_author_id int NOT NULL COMMENT '被评论的帖子的作者ID',
         user_id int NOT NULL COMMENT '评论者的用户ID',
-        user_nick VARCHAR(100) NOT NULL COMMENT '评论者的用户昵称',
-        text VARCHAR(100) NOT NULL COMMENT '评论内容',
+        user_nick VARCHAR(30) NOT NULL COMMENT '评论者的用户昵称',
+        text VARCHAR(500) NOT NULL COMMENT '评论内容',
         create_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '评论时间',
         PRIMARY KEY(id)
        );`);

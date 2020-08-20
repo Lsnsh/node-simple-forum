@@ -9,17 +9,17 @@
   </div>
   <ul class="post-list">
     <% if (postList && postList.length) { %>
-      <% postList.forEach(function(post) { %>
-        <li>
-          <a href="/post/<%= post.id %>" target="_blank"><%= post.title %></a>
-          <p>
-            <span><%= post.author %></span>
-            <span><%= post.create_time.toLocaleDateString() %></span>
-          </p>
-        </li>
-      <% }) %>
+    <% postList.forEach(function(post) { %>
+    <li>
+      <a href="/post/<%= post.id %>" target="_blank"><%= post.title %></a>
+      <p>
+        <span><%= post.author %></span>
+        <span><%= post.create_time.toLocaleDateString() %></span>
+      </p>
+    </li>
+    <% }) %>
     <% } else { %>
-      <p>还没有帖子，快去发一贴吧</p>
+    <p>还没有帖子，快去发一贴吧</p>
     <% } %>
   </ul>
 </section>
