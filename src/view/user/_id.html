@@ -1,15 +1,31 @@
 <section class="section-wrapper user-detail-wrapper">
   <% if (user) { %>
-    <!-- 用户详情 -->
-    <div>
-      <h1><%= user.username %></h1>
-      <p>
-        <span><%= user.create_time.toLocaleDateString() %></span>
-        <span style="float: right;">Hello World</span>
-      </p>
-      <hr>
-    </div>
+  <!-- 用户详情 -->
+  <div>
+    <h1><%= user.username %></h1>
+    <p>
+      <span><%= user.create_time.toLocaleDateString() %></span>
+      <span style="float: right;">Hello World</span>
+    </p>
+    <hr>
+  </div>
+  <ul class="post-list">
+    <% if (postList && postList.length) { %>
+    <% postList.forEach(function(post) { %>
+    <li style="padding: 5px;">
+      <div style="display: flex;justify-content: space-between;">
+        <a style="flex: 1;" class="text-ellipsis" href="/post/<%= post.id %>" target="_blank"><%= post.title %></a>
+        <div style="width: 110px;text-align: center;">
+          <span><%= post.create_time.toLocaleDateString() %></span>
+        </div>
+      </div>
+    </li>
+    <% }) %>
+    <% } else { %>
+    <p>还没有帖子，快去发一贴吧</p>
+    <% } %>
+  </ul>
   <% } else { %>
-    <p>用户找不到了 ：）</p>
+  <p>用户找不到了 ：）</p>
   <% } %>
 </section>

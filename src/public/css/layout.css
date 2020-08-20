@@ -1,5 +1,5 @@
 html {
-  font: 110%/1.5 'ff-meta-serif-web-pro','system-ui',serif;
+  font: 110%/1.5 "ff-meta-serif-web-pro", "system-ui", serif;
   box-sizing: border-box;
   overflow-y: scroll;
 }
@@ -21,6 +21,11 @@ pre {
   padding: 32px 16px;
   margin-left: auto;
   margin-right: auto;
+}
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .cs-pt {
   cursor: pointer;

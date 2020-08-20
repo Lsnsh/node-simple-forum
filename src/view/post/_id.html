@@ -3,9 +3,15 @@
   <!-- 帖子详情 -->
   <div>
     <h1><%= post.title %></h1>
-    <p>
-      <a href="/user/<%= post.author_id %>" target="_blank"><%= post.author %></a>
-      <span><%= post.create_time.toLocaleDateString() %></span>
+    <p style="display: flex;justify-content: space-between;">
+      <span>
+        <a href="/user/<%= post.author_id %>" target="_blank"><%= post.author %></a>
+        <span><%= post.create_time.toLocaleDateString() %></span>
+      </span>
+      <%# 楼主可以删除自己的帖子 %>
+      <% if (session.id === post.author_id) { %>
+      <span style="color: blue;" class="cs-pt" data-post-id="<%= post.id %>" onclick="_deletePost(event)">删除</span>
+      <% } %>
     </p>
     <pre><%= post.content %></pre>
   </div>
@@ -42,7 +48,8 @@
     <% } %>
     <textarea name="comment" id="comment" cols="50" rows="6"></textarea>
     <div>
-      <button type="button" data-post-id="<%= post.id %>" data-post-author-id="<%= post.author_id %>" onclick="_createComment(event)">回复</button>
+      <button type="button" data-post-id="<%= post.id %>" data-post-author-id="<%= post.author_id %>"
+        onclick="_createComment(event)">回复</button>
     </div>
   </div>
   <% } else { %>
@@ -51,6 +58,32 @@
 </section>
 
 <script>
+  const _deletePost = (e) => {
+    const ifConfirm = confirm("确认删除这条帖子？");
+    if (!ifConfirm) {
+      return;
+    }
+    const dataset = e.target.dataset;
+    const url = '/api/post/delete';
+    const data = {
+      post_id: +dataset.postId
+    };
+
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(async res => {
+      const r = await res.json();
+      if (r.result) {
+        location.href = '/post';
+      }
+    })
+      .catch(error => console.error('Error:', error));
+  }
+
   const _createComment = (e) => {
     const text = document.querySelector('#comment').value;
     if (!text) {

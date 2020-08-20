@@ -33,12 +33,18 @@ module.exports = {
   userDetail(values) {
     return query(`select username,create_time from user where id=?`, values);
   },
+  findUserPostByUserIdFromPost(values) {
+    return query(`select * from post where author_id=?`, values);
+  },
   // 帖子
   postList(values) {
     return query(`select * from post`, values);
   },
   createPost(values) {
     return query(`insert post set title=?,author=?,author_id=?,content=?`, values);
+  },
+  deletePost(values) {
+    return query(`delete from post where id=?`, values);
   },
   postDetail(values) {
     return query(`select * from post where id=?`, values);

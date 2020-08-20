@@ -43,6 +43,18 @@ module.exports = {
         }
       }
     },
+    async deletePost(ctx) {
+      const body = ctx.request.body;
+      const res = await mysql.deletePost([body.post_id]);
+      ctx.body = {
+        res: res,
+        result: true,
+        status: {
+          code: 200,
+          message: '删除成功'
+        }
+      }
+    },
     async createComment(ctx) {
       const body = ctx.request.body;
       const res = await mysql.createComment([body.post_id, body.post_author_id, ctx.session.id, ctx.session.name, body.text]);

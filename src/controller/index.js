@@ -9,7 +9,7 @@ module.exports = {
       const postList = await mysql.postList();
       await ctx.render('home', {
         title: 'home',
-        postList: postList || [],
+        postList: postList,
         session: ctx.session
       });
     }
@@ -19,7 +19,7 @@ module.exports = {
       const postList = await mysql.postList();
       await ctx.render('post/index', {
         title: 'post list',
-        postList: postList || [],
+        postList: postList,
         session: ctx.session
       });
     },
@@ -43,8 +43,10 @@ module.exports = {
   user: {
     async _id(ctx) {
       const userDetail = await mysql.userDetail([+ctx.params.id]);
+      const userPostList = await mysql.findUserPostByUserIdFromPost([+ctx.params.id]);
       await ctx.render('user/_id', {
         title: 'user detail',
+        postList: userPostList,
         user: userDetail[0],
         session: ctx.session
       });
