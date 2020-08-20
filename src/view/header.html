@@ -1,0 +1,21 @@
+<div style="text-align: center;">
+  <a href="/">首页</a>
+  <a href="/post" style="margin-right: 30px;">帖子</a>
+  <% if (!session.id || !session.name) { %>
+  <a href="/signin">登陆</a>
+  <a href="/signup">注册</a>
+  <% } else { %>
+  <a href="/user/<%= session.id %>"><%= session.name %></a>
+  <a href="#" onclick="_signOut()">退出</a>
+  <% } %>
+</div>
+
+<script>
+  const _signOut = () => {
+    const ifConfirm = confirm("确认退出？");
+    if (!ifConfirm) {
+      return;
+    }
+    location.href = `/signout?u=${decodeURIComponent(location.href)}`
+  }
+</script>

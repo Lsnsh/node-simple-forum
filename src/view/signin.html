@@ -1,4 +1,4 @@
-<div id="signin-page">
+<section class="section-wrapper signin-wrapper">
   <h1>登陆</h1>
   <div>
     <form>
@@ -9,11 +9,12 @@
       <button type="button" onclick="_userLogin()">登陆</button>
     </form>
   </div>
-</div>
+</section>
+
 <script>
   const _userLogin = () => {
-    var url = '/api/signin';
-    var data = { username: document.querySelector('#username').value, password: document.querySelector('#password').value, };
+    const url = '/api/signin';
+    const data = { username: document.querySelector('#username').value, password: document.querySelector('#password').value, };
 
     fetch(url, {
       method: 'POST',

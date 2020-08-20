@@ -19,12 +19,14 @@ module.exports = {
       const postList = await mysql.postList();
       await ctx.render('post/index', {
         title: 'post list',
-        postList: postList || []
+        postList: postList || [],
+        session: ctx.session
       });
     },
     async new(ctx) {
       await ctx.render('post/new', {
-        title: 'new post'
+        title: 'new post',
+        session: ctx.session
       });
     },
     async _id(ctx) {
@@ -43,22 +45,34 @@ module.exports = {
       const userDetail = await mysql.userDetail([+ctx.params.id]);
       await ctx.render('user/_id', {
         title: 'user detail',
-        user: userDetail[0]
+        user: userDetail[0],
+        session: ctx.session
       });
     }
   },
   signin: {
     async index(ctx) {
       await ctx.render('signin', {
-        title: 'signin'
+        title: 'signin',
+        session: ctx.session
       });
     }
   },
   signup: {
     async index(ctx) {
       await ctx.render('signup', {
-        title: 'signup'
+        title: 'signup',
+        session: ctx.session
       });
+    }
+  },
+  signout: {
+    async index(ctx) {
+      // When ctx.session gets cleared ( = {} or null ), cookie and store data will be deleted.
+      // https://www.npmjs.com/package/koa-session-minimal
+      ctx.session = {};
+      // 重定向到客户端指定的地址
+      ctx.redirect(ctx.query.u || '/', 302);
     }
   }
 }

@@ -1,4 +1,4 @@
-<div id="signup-page">
+<section class="section-wrapper signup-wrapper">
   <h1>注册</h1>
   <div>
     <!-- TODO: 表单校验 -->
@@ -11,11 +11,12 @@
       <button type="reset">清空</button>
     </form>
   </div>
-</div>
+</section>
+
 <script>
   const _createUser = () => {
-    var url = '/api/signup';
-    var data = { username: document.querySelector('#username').value, password: document.querySelector('#password').value, };
+    const url = '/api/signup';
+    const data = { username: document.querySelector('#username').value, password: document.querySelector('#password').value, };
 
     fetch(url, {
       method: 'POST',
@@ -26,7 +27,7 @@
     }).then(async res => {
       const r = await res.json();
       if (r.result) {
-        location.replace('/');
+        location.replace('/signin');
       }
     })
       .catch(error => console.error('Error:', error))
