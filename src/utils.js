@@ -2,12 +2,12 @@ const config = require('./config');
 
 const $withPrefix = (path) => {
   if (typeof path !== 'string') {
-    return config.publicRoutePrefix;
+    return config.publicPath;
   }
   if (!path.startsWith('/')) {
     return '/' + path;
   }
-  return config.publicRoutePrefix + path;
+  return config.publicPath + path;
 }
 
 module.exports = {

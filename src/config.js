@@ -1,6 +1,5 @@
 module.exports = {
-  // prefix router paths
-  publicRoutePrefix: '/node-simple-forum',
+  publicPath: process.env.NODE_ENV === 'production' ? '/node-simple-forum' : '',
   mysql: {
     host: 'localhost',
     user: 'root',
