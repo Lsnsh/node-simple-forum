@@ -1,22 +1,32 @@
 {
   "name": "node-simple-forum",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "dev": "nodemon src/app.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "使用 `koa2` 搭建的一个简易论坛，包含用户登陆注册，帖子发布、修改、删除、列表、评论等功能",
+  "main": "ecosystem.config.js",
   "dependencies": {
     "@koa/router": "^9.3.1",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
     "koa-ejs": "^4.3.0",
-    "koa-mysql-session": "0.0.2",
+    "koa-mysql-session": "^0.0.2",
     "koa-session-minimal": "^4.0.0",
     "koa-static": "^5.0.0",
     "mysql": "^2.18.1"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "deploy": "pm2 start ecosystem.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lsnsh/node-simple-forum.git"
+  },
+  "keywords": ["nodejs", "koa2", "forum"],
+  "author": "Lsnsh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lsnsh/node-simple-forum/issues"
+  },
+  "homepage": "https://github.com/Lsnsh/node-simple-forum#readme"
 }
