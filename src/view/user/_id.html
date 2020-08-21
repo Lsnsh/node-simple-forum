@@ -14,7 +14,8 @@
     <% postList.forEach(function(post) { %>
     <li style="padding: 5px;">
       <div style="display: flex;justify-content: space-between;">
-        <a style="flex: 1;" class="text-ellipsis" href="/post/<%= post.id %>" target="_blank"><%= post.title %></a>
+        <a style="flex: 1;" class="text-ellipsis" href="<%= $withPrefix(`/post/${post.id}`) %>"
+          target="_blank"><%= post.title %></a>
         <div style="width: 110px;text-align: center;">
           <span><%= post.create_time.toLocaleDateString() %></span>
         </div>
@@ -22,7 +23,11 @@
     </li>
     <% }) %>
     <% } else { %>
+    <% if (!session || !session.id) { %>
+    <p>还没有帖子</p>
+    <% } else { %>
     <p>还没有帖子，快去发一贴吧</p>
+    <% } %>
     <% } %>
   </ul>
   <% } else { %>

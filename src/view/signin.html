@@ -13,7 +13,7 @@
 
 <script>
   const _userLogin = () => {
-    const url = '/api/signin';
+    const url = `<%= $withPrefix('/api/signin') %>`;
     const data = { username: document.querySelector('#username').value, password: document.querySelector('#password').value, };
 
     fetch(url, {
@@ -25,7 +25,7 @@
     }).then(async res => {
       const r = await res.json();
       if (r.result) {
-        location.replace('/');
+        location.replace(`<%= $withPrefix('/') %>`);
       }
     })
       .catch(error => console.error('Error:', error));

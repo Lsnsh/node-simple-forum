@@ -1,4 +1,6 @@
 module.exports = {
+  // prefix router paths
+  publicRoutePrefix: '/node-simple-forum',
   mysql: {
     host: 'localhost',
     user: 'root',

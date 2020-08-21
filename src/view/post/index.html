@@ -2,7 +2,7 @@
   <div style="text-align: center;">
     <h1>帖子列表</h1>
     <div>
-      <a href="/post/new">
+      <a href="<%= $withPrefix('/post/new') %>">
         <button>发帖</button>
       </a>
     </div>
@@ -11,7 +11,7 @@
     <% if (postList && postList.length) { %>
     <% postList.forEach(function(post) { %>
     <li>
-      <a href="/post/<%= post.id %>" target="_blank"><%= post.title %></a>
+      <a href="<%= $withPrefix(`/post/${post.id}`) %>" target="_blank"><%= post.title %></a>
       <p>
         <span><%= post.author %></span>
         <span><%= post.create_time.toLocaleDateString() %></span>

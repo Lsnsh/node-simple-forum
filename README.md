@@ -8,11 +8,13 @@ npm i
 npm run dev
 ```
 
-## 初始化数据库
+## 创建数据库
+
+手动创建数据库，项目启动后会尝试创建数据表
 
 ```sql
 CREATE DATABASE node_simple_forum;
-SHOW DATABASES
+SHOW DATABASES;
 +--------------------+
 | Database           |
 +--------------------+
@@ -22,14 +24,6 @@ SHOW DATABASES
 | performance_schema |
 | sys                |
 +--------------------+
-
-create table if not exists user(
-  id INT NOT NULL AUTO_INCREMENT,
-  username VARCHAR(100) NOT NULL COMMENT '用户名',
-  password VARCHAR(100) NOT NULL COMMENT '用户密码',
-  create_time VARCHAR(100) NOT NULL COMMENT '注册时间',
-  PRIMARY KEY ( id )
-);
 ```
 
 使用 `mysql 8.x`，连接数据库时，如果遇到下面的错误
@@ -65,5 +59,4 @@ flush privileges;
 - <del>删除用户</del>
 - 修改用户
 - 查询用户 x
-
-- 退出登陆
+- 退出登陆 x

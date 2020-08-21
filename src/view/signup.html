@@ -14,7 +14,7 @@
 
 <script>
   const _createUser = () => {
-    const url = '/api/signup';
+    const url = `<%= $withPrefix('/api/signup') %>`;
     const data = { username: document.querySelector('#username').value, password: document.querySelector('#password').value, };
 
     if (!data.username) {
@@ -38,7 +38,7 @@
     }).then(async res => {
       const r = await res.json();
       if (r.result) {
-        location.replace('/signin');
+        location.replace(`<%= $withPrefix('/signin') %>`);
       }
     })
       .catch(error => console.error('Error:', error))

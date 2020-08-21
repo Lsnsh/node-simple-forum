@@ -5,7 +5,7 @@
     <h1><%= post.title %></h1>
     <p style="display: flex;justify-content: space-between;">
       <span>
-        <a href="/user/<%= post.author_id %>" target="_blank"><%= post.author %></a>
+        <a href="<%= $withPrefix(`/user/${post.author_id}`) %>" target="_blank"><%= post.author %></a>
         <span><%= post.create_time.toLocaleDateString() %></span>
       </span>
       <%# 楼主可以删除自己的帖子 %>
@@ -22,7 +22,7 @@
     <div <%- `style="${index === 0 ? 'border-top: 1px solid #e1e4e6;' : ''}border-bottom: 1px solid #e1e4e6;"` %>>
       <p><%= comment.text %></p>
       <p style="display: flex;justify-content: space-between;">
-        <a href="/user/<%= comment.user_id %>"><%= comment.user_nick %></a>
+        <a href="<%= $withPrefix(`/user/${comment.user_id}`) %>"><%= comment.user_nick %></a>
         <span>
           <%# 楼主可以删除所有回复、层主可以删除自己的回复 %>
           <% if (session.id === post.author_id || session.id === comment.user_id) { %>
@@ -42,7 +42,8 @@
   <!-- 发表评论 -->
   <div style="padding-top: 20px;">
     <% if (!session || !session.id) { %>
-    <div>您需要登录后才可以回复，请<a href="/signin">登录</a>或者<a href="/signup">立即注册</a></div>
+    <div>您需要登录后才可以回复，请<a href="<%= $withPrefix('/signin') %>">登录</a>或者<a href="<%= $withPrefix('/signup') %>">立即注册</a>
+    </div>
     <% } else {%>
     <div>发表回复</div>
     <% } %>
@@ -64,7 +65,7 @@
       return;
     }
     const dataset = e.target.dataset;
-    const url = '/api/post/delete';
+    const url = `<%= $withPrefix('/api/post/delete') %>`;
     const data = {
       post_id: +dataset.postId
     };
@@ -78,7 +79,7 @@
     }).then(async res => {
       const r = await res.json();
       if (r.result) {
-        location.href = '/post';
+        location.href = `<%= $withPrefix('/post') %>`;
       }
     })
       .catch(error => console.error('Error:', error));
@@ -93,7 +94,7 @@
       return alert('您输入的内容不合法，请修改后重新提交。');
     }
     const dataset = e.target.dataset;
-    const url = '/api/comment/create';
+    const url = `<%= $withPrefix('/api/comment/create') %>`;
     const data = {
       post_id: +dataset.postId,
       post_author_id: +dataset.postAuthorId,
@@ -121,7 +122,7 @@
       return;
     }
     const dataset = e.target.dataset;
-    const url = '/api/comment/delete';
+    const url = `<%= $withPrefix('/api/comment/delete') %>`;
     const data = {
       post_id: +dataset.postId,
       comment_id: +dataset.commentId,

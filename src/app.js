@@ -7,9 +7,12 @@ const path = require('path');
 const initRoute = require('./router');
 const controller = require('./controller')
 const mysql = require('./mysql');
+const config = require('./config');
 
 const app = new Koa();
-const router = new Router();
+const router = new Router({
+  prefix: config.publicRoutePrefix
+});
 
 render(app, {
   root: path.join(__dirname, 'view'),
