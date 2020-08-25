@@ -13,7 +13,9 @@
     "koa-static": "^5.0.0",
     "mysql": "^2.18.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
   "scripts": {
     "dev": "NODE_ENV=development && nodemon src/app.js",
     "deploy": "pm2 start ecosystem.config.js"
@@ -22,7 +24,11 @@
     "type": "git",
     "url": "git+https://github.com/Lsnsh/node-simple-forum.git"
   },
-  "keywords": ["nodejs", "koa2", "forum"],
+  "keywords": [
+    "nodejs",
+    "koa2",
+    "forum"
+  ],
   "author": "Lsnsh",
   "license": "ISC",
   "bugs": {
