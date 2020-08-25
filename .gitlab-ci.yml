@@ -1,3 +1,11 @@
+# 缓存
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - node_modules
+
 # 工作名称
 job-deploy:
   # 触发条件：publish 分支更新时
