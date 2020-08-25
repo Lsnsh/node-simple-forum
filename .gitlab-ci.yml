@@ -1,0 +1,12 @@
+# 工作名称
+job-deploy:
+  # 触发条件：publish 分支更新时
+  only:
+    - publish
+  # 指定工作给具有特定标签的 Runners
+  tags:
+    - runner-001-tag
+  # 脚本
+  script:
+    - npm install
+    - npm run deploy
