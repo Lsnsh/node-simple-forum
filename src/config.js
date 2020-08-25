@@ -5,5 +5,6 @@ module.exports = {
     user: 'root',
     password: 'r123oot4',
     database: 'node_simple_forum'
-  }
+  },
+  version: require('../package.json').version
 }
