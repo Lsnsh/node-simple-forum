@@ -18,7 +18,8 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development && nodemon src/app.js",
-    "deploy": "pm2 start ecosystem.config.js"
+    "deploy": "pm2 start ecosystem.config.js",
+    "publish": "sh ./build/git-push.sh publish"
   },
   "repository": {
     "type": "git",
