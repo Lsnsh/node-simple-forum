@@ -1,11 +1,13 @@
 <section class="section-wrapper post-list-wrapper">
   <div style="text-align: center;">
     <h1>帖子列表</h1>
+    <% if (session.id && session.name) { %>
     <div>
       <a href="<%= $withPrefix('/post/new') %>">
         <button>发帖</button>
       </a>
     </div>
+    <% } %>
   </div>
   <ul class="post-list">
     <% if (postList && postList.length) { %>

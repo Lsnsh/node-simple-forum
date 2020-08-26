@@ -89,8 +89,13 @@ module.exports = {
       // When ctx.session gets cleared ( = {} or null ), cookie and store data will be deleted.
       // https://www.npmjs.com/package/koa-session-minimal
       ctx.session = {};
+
+      let url = ctx.query.u || '/';
+      if (typeof url === 'string' && url.endsWith('/post/new')) {
+        url = '/';
+      }
       // 重定向到客户端指定的地址
-      ctx.redirect(ctx.query.u || '/', 302);
+      ctx.redirect(url, 302);
     }
   }
 }
