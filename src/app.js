@@ -26,7 +26,9 @@ mysql.initTable();
 
 app.use(bodyParser());
 app.use(router.routes());
-app.use(require('koa-static')(path.join(__dirname, 'public')));
+app.use(require('koa-static')(path.join(__dirname, 'public'), {
+  maxAge: 7 * 86400 * 1000
+}));
 
 app.listen(3000);
 console.log('listening http://localhost:3000');
