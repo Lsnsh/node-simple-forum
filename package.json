@@ -31,7 +31,7 @@
     "forum"
   ],
   "author": "Lsnsh",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Lsnsh/node-simple-forum/issues"
   },
