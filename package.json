@@ -1,6 +1,6 @@
 {
   "name": "node-simple-forum",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "使用 `koa2` 搭建的一个简易论坛，包含用户登陆注册，帖子发布、修改、删除、列表、评论等功能",
   "main": "ecosystem.config.js",
   "dependencies": {
